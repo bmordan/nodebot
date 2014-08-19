@@ -2,35 +2,50 @@ define(function(require, exports, module) {
     // import dependencies
     var Engine = require('famous/core/Engine')
     var Surface = require('famous/core/Surface')
+    var View = require('famous/core/View')
     var Modifier = require('famous/core/Modifier')
     var Transform = require('famous/core/Transform')
     var ImageSurface = require('famous/surfaces/ImageSurface')
-    var GridLayout = require('famous/views/GridLayout')
+    var SequentialLayout = require('famous/views/SequentialLayout')
 
     // create the main context
     var mainContext = Engine.createContext()
-    var grid = new GridLayout({
-      dimensions: [2,1]
+    var left = function _createLeft(){
+      var view = new View()
+      var leftMod = new Modifier({
+        align: [0.5,0.5],
+        origin: [0.5,0.5]
+      })
+      var leftSurface = new Surface({
+        size: [undefined,300],
+        content: 'left',
+        properties: {
+          backgroundColor: '#FF3300'
+        }
+      })
+      view.add(leftMod).add(leftSurface)
+      return view
+    }
+    var right = function _createRight(){
+      var view = new View()
+      var rightMod = new Modifier({
+        align: [0.5,0.5],
+        origin: [0.5,0.5]
+      })
+      var rightSurface = new Surface({
+        size: [undefined,200],
+        content: 'right',
+        properties: {
+          backgroundColor: '#FF3300'
+        }
+      })
+      view.add(rightMod).add(rightSurface)
+      return view
+    }
+    var controls = [left(),right()]
+    var sequentialLayout = new SequentialLayout({
+     direction: 0
     })
-    
-    var left = new Surface({
-      content: 'Left',
-      size: [200,200],
-      properties: {
-        backgroundColor: '#FF3300'
-      }
-    })
-    
-    var right = new Surface({
-      content: 'right',
-      size: [200,200],
-      properties: {
-        backgroundColor: '#FF3300'
-      }
-    })
-    
-    var controls = [left,right]
-    grid.sequenceFrom(controls)
-    
-    mainContext.add(grid)
+    sequentialLayout.sequenceFrom(controls)
+    mainContext.add(sequentialLayout)
 });
