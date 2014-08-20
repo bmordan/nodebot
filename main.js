@@ -7,7 +7,8 @@ define(function(require, exports, module) {
   var ImageSurface = require("famous/surfaces/ImageSurface")
 
   var mainContext = Engine.createContext();
-
+  var contextSize = window.innerWidth / 6;
+  
   var grid = new GridLayout({
    dimensions: [2, 1]
   });
@@ -21,7 +22,7 @@ define(function(require, exports, module) {
       origin: [0.5,0.5]
     })
     var surface = new ImageSurface({
-      size: [200,200],
+      size: [contextSize,contextSize],
       content: './2.png'
     })
     view.add(leftMod).add(surface)
@@ -34,7 +35,7 @@ define(function(require, exports, module) {
       origin: [0.5,0.5]
     })
     var surface = new ImageSurface({
-      size: [200,200],
+      size: [contextSize,contextSize],
       content: './2.png'
     })
     view.add(rightMod).add(surface)
@@ -42,5 +43,5 @@ define(function(require, exports, module) {
   }  
 
   mainContext.add(grid);
-
+  console.log(contextSize);
 });
