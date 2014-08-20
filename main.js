@@ -1,7 +1,10 @@
 define(function(require, exports, module) {
   var Engine = require("famous/core/Engine");
   var Surface = require("famous/core/Surface");
+  var Modifier = require("famous/core/Modifier")
   var GridLayout = require("famous/views/GridLayout");
+  var View = require('famous/core/View');
+  var ImageSurface = require("famous/surfaces/ImageSurface")
 
   var mainContext = Engine.createContext();
 
@@ -9,23 +12,34 @@ define(function(require, exports, module) {
    dimensions: [2, 1]
   });
 
-  var surfaces = [];
+  var surfaces = [_createLeft(),_createRight()];
   grid.sequenceFrom(surfaces);
 
-  for(var i = 0; i < 8; i++) {
-   surfaces.push(new Surface({
-   content: "panel " + (i + 1),
-   size: [undefined, undefined],
-   properties: {
-   backgroundColor: "hsl(" + (i * 360 / 8) + ", 100%, 50%)",
-   color: "#404040",
-   lineHeight: '200px',
-   textAlign: 'center'
-   }
-   }));
+  function _createLeft(){
+    var view = new View()
+    var leftMod = new Modifier({
+      origin: [0.5,0.5]
+    })
+    var surface = new ImageSurface({
+      size: [200,200],
+      content: './2.png'
+    })
+    view.add(leftMod).add(surface)
+    return view
   }
   
-  
+  function _createRight(){
+    var view = new View()
+    var rightMod = new Modifier({
+      origin: [0.5,0.5]
+    })
+    var surface = new ImageSurface({
+      size: [200,200],
+      content: './2.png'
+    })
+    view.add(rightMod).add(surface)
+    return view
+  }  
 
   mainContext.add(grid);
 
